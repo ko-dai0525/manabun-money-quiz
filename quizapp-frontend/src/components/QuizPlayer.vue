@@ -31,6 +31,7 @@
 <script lang="ts" setup>
 import { ref, onMounted, computed } from "vue";
 import { fetchQuizzes, type Quiz } from "../api";
+import { useRouter } from "vue-router";
 
 const quizList = ref<Quiz[]>([]);
 const currentIndex = ref(0);
@@ -59,19 +60,29 @@ const isLastQuestion = computed(() => {
   return currentIndex.value === quizList.value.length - 1;
 });
 
+const score = ref(0);
+const router = useRouter();
+
 const selectAnswer = (choice: number) => {
   if (selected.value !== null) return; // すでに回答済み
   selected.value = choice;
-  isCorrect.value = choice === currentQuiz.value?.answer;
+  const correct = choice === currentQuiz.value?.answer;
+  isCorrect.value = correct;
+  if (correct) {
+    score.value += 1;
+  }
 };
 
 const nextQuestion = () => {
   selected.value = null;
   isCorrect.value = false;
   if (!isLastQuestion.value) {
-    currentIndex.value += 1;
+    currentIndex.value++;
   } else {
-    alert("クイズ終了！"); // 今後、結果画面に遷移してもOK
+    router.push({
+      name: "ResultView",
+      query: { score: score.value, total: quizList.value.length },
+    });
   }
 };
 
