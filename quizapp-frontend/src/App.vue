@@ -1,17 +1,17 @@
 <template>
   <div id="app">
-    <QuizList />
+    <router-view />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import QuizList from "./components/QuizList.vue";
+import QuizPlayer from "./components/QuizPlayer.vue";
 
 export default defineComponent({
   name: "App",
   components: {
-    QuizList,
+    QuizPlayer,
   },
 });
 </script>
