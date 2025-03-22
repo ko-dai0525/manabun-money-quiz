@@ -1,11 +1,18 @@
+<!-- src/components/QuizList.vue -->
 <template>
-  <div>
-    <h1>Quiz List</h1>
-    <ul>
-      <li v-for="quiz in quizzes" :key="quiz.id">
-        {{ quiz.question }} - {{ quiz.answer }}
-      </li>
-    </ul>
+  <div v-if="quizzes.length">
+    <div v-for="quiz in quizzes" :key="quiz.id" class="quiz-card">
+      <h2>{{ quiz.questionText }}</h2>
+      <ul>
+        <li>{{ quiz.option1 }}</li>
+        <li>{{ quiz.option2 }}</li>
+        <li>{{ quiz.option3 }}</li>
+        <li>{{ quiz.option4 }}</li>
+      </ul>
+    </div>
+  </div>
+  <div v-else>
+    <p>Loading...</p>
   </div>
 </template>
 
@@ -34,4 +41,9 @@ export default defineComponent({
 
 <style scoped>
 /* 必要に応じてスタイルを記述 */
+.quiz-card {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+}
 </style>

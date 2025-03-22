@@ -2,12 +2,17 @@ import axios from "axios";
 
 export interface Quiz {
   id: number;
-  question: string;
-  answer: string;
+  questionText: string;
+  option1: string;
+  option2: string;
+  option3: string;
+  option4: string;
+  answer: number;
+  explanation: string;
 }
 
 // バックエンドの API エンドポイント（必要に応じて調整）
-const API_URL = "http://localhost:8080/api/questions";
+const API_URL = "http://localhost:8080/api/quizzes";
 
 /**
  * クイズの一覧を取得する
