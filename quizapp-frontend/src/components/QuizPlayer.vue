@@ -1,11 +1,12 @@
 <template>
+  <!-- クイズが存在する場合 -->
   <div v-if="quizList.length && currentQuiz">
     <h2>第{{ currentIndex + 1 }}問</h2>
-    <p class="score-status">正解数：{{ score }} / {{ QUESTION_COUNT }}</p>
+    <p class="score-status">正解数：{{ score }} / {{ quizList.length }}</p>
     <div class="progress-bar">
       <div
         class="progress"
-        :style="{ width: (currentIndex / QUESTION_COUNT) * 100 + '%' }"
+        :style="{ width: (currentIndex / quizList.length) * 100 + '%' }"
       ></div>
     </div>
     <h3>{{ currentQuiz.questionText }}</h3>
@@ -19,7 +20,6 @@
         {{ option }}
       </li>
     </ul>
-
     <!-- 確定ボタンを追加-->
     <div v-if="selected && !showResult">
       <button @click="checkAnswer">確定</button>
@@ -33,6 +33,13 @@
       </button>
     </div>
   </div>
+
+  <!-- クイズが存在しない場合 -->
+  <div v-else-if="quizList.length === 0">
+    <p>このカテゴリには問題がまだありません。</p>
+  </div>
+
+  <!-- ローディング中 or 例外 -->
   <div v-else>
     <p>読み込み中...</p>
   </div>
@@ -40,15 +47,18 @@
 
 <script lang="ts" setup>
 import { ref, onMounted, computed } from "vue";
-import { fetchQuizzes, type Quiz } from "../api";
+import { fetchQuizzes, fetchQuizzesByCategory, type Quiz } from "../api";
 import { useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 
 const quizList = ref<Quiz[]>([]);
 const currentIndex = ref(0);
 const selected = ref<number | null>(null);
 const isCorrect = ref(false);
 
-const currentQuiz = computed(() => quizList.value[currentIndex.value]);
+const currentQuiz = computed(() => {
+  return quizList.value[currentIndex.value] || null;
+});
 
 const options = computed(() =>
   currentQuiz.value
@@ -107,14 +117,23 @@ const nextQuestion = () => {
   }
 };
 
-const QUESTION_COUNT = 5;
-
 onMounted(async () => {
-  const allQuizzes = await fetchQuizzes();
-  // シャッフルして5問に絞る
-  quizList.value = allQuizzes
+  const QUESTION_COUNT = 5;
+  const route = useRoute();
+  const category = route.query.category as string;
+
+  let quizzes: Quiz[];
+
+  if (category) {
+    quizzes = await fetchQuizzesByCategory(category);
+  } else {
+    quizzes = await fetchQuizzes();
+  }
+
+  // シャッフルして5問に絞り、5問に満たない場合も表示する
+  quizList.value = quizzes
     .sort(() => Math.random() - 0.5)
-    .slice(0, QUESTION_COUNT);
+    .slice(0, Math.min(quizzes.length, QUESTION_COUNT));
 });
 </script>
 

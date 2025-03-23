@@ -2,7 +2,13 @@
   <div class="home-container">
     <h1 class="title">まなぶん！おかねクイズ</h1>
     <p class="subtitle">お金のこと、楽しく学ぼう！</p>
-    <button @click="startQuiz" class="start-button">クイズをはじめる</button>
+    <p class="category-button">
+      <button @click="startQuiz('買い物')">買い物</button>
+      <button @click="startQuiz('貯金')">貯金</button>
+    </p>
+    <button @click="startQuiz('未分類')" class="start-button">
+      クイズをはじめる
+    </button>
   </div>
 </template>
 
@@ -10,8 +16,8 @@
 import { useRouter } from "vue-router";
 const router = useRouter();
 
-const startQuiz = () => {
-  router.push("/quiz");
+const startQuiz = (category: string) => {
+  router.push({ path: "/quiz", query: { category } });
 };
 </script>
 
