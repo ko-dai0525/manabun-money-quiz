@@ -28,9 +28,7 @@ export const fetchQuizzes = async (): Promise<Quiz[]> => {
 export const fetchQuizzesByCategory = async (
   category: string
 ): Promise<Quiz[]> => {
-  const response = await axios.get<Quiz[]>(
-    `/api/quizzes?category=${encodeURIComponent(category)}`
-  );
+  const response = await axios.get<Quiz[]>(API_URL, { params: { category } });
   return response.data;
 };
 
