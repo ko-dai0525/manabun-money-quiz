@@ -1,10 +1,16 @@
 import { createRouter, createWebHistory } from "vue-router";
 import QuizPlayer from "../components/QuizPlayer.vue";
 import ResultView from "../components/ResultView.vue";
+import Home from "../components/Home.vue";
 
 const routes = [
   {
     path: "/",
+    name: "Home",
+    component: Home,
+  },
+  {
+    path: "/quiz",
     name: "QuizPlayer",
     component: QuizPlayer,
   },
