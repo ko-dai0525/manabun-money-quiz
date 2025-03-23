@@ -1,6 +1,13 @@
 <template>
   <div v-if="quizList.length && currentQuiz">
     <h2>第{{ currentIndex + 1 }}問</h2>
+    <p class="score-status">正解数：{{ score }} / {{ QUESTION_COUNT }}</p>
+    <div class="progress-bar">
+      <div
+        class="progress"
+        :style="{ width: (currentIndex / QUESTION_COUNT) * 100 + '%' }"
+      ></div>
+    </div>
     <h3>{{ currentQuiz.questionText }}</h3>
     <ul>
       <li
@@ -100,10 +107,14 @@ const nextQuestion = () => {
   }
 };
 
+const QUESTION_COUNT = 5;
+
 onMounted(async () => {
   const allQuizzes = await fetchQuizzes();
   // シャッフルして5問に絞る
-  quizList.value = allQuizzes.sort(() => Math.random() - 0.5).slice(0, 5);
+  quizList.value = allQuizzes
+    .sort(() => Math.random() - 0.5)
+    .slice(0, QUESTION_COUNT);
 });
 </script>
 
@@ -120,5 +131,25 @@ li {
 }
 .selected {
   background-color: #eef;
+}
+.score-status {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #555;
+  margin: 0.5rem 0;
+}
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background-color: #eee;
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 1rem 0;
+}
+
+.progress {
+  height: 100%;
+  background-color: #ffd700;
+  transition: width 0.3s ease;
 }
 </style>
