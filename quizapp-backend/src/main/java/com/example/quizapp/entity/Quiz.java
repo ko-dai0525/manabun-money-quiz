@@ -35,4 +35,7 @@ public class Quiz {
 
     @Column
     private String explanation;
+
+    @Column(nullable = false) // カテゴリを必須したくない時はnullable = trueにする
+    private String category = "未分類";
 }

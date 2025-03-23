@@ -23,6 +23,18 @@ export const fetchQuizzes = async (): Promise<Quiz[]> => {
 };
 
 /**
+ * カテゴリー毎のクイズを取得する
+ */
+export const fetchQuizzesByCategory = async (
+  category: string
+): Promise<Quiz[]> => {
+  const response = await axios.get<Quiz[]>(
+    `/api/quizzes?category=${encodeURIComponent(category)}`
+  );
+  return response.data;
+};
+
+/**
  * 新しいクイズを作成する
  * @param quiz - クイズ情報。id は自動生成されるので含めない
  */
