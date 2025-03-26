@@ -10,6 +10,10 @@
       クイズをはじめる
     </button>
   </div>
+  <!-- クイズ登録ボタンを追加 -->
+  <router-link to="/register" class="register-link"
+    >クイズを登録する</router-link
+  >
 </template>
 
 <script lang="ts" setup>
@@ -66,5 +70,13 @@ const startQuiz = (category: string) => {
 
 .start-button:hover {
   background-color: #ffcc00;
+}
+
+.register-link {
+  margin-top: 1rem;
+  display: inline-block;
+  color: #007bff;
+  text-decoration: underline;
+  cursor: pointer;
 }
 </style>
