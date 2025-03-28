@@ -30,9 +30,16 @@
       <textarea v-model="quiz.explanation" required></textarea>
 
       <label>カテゴリ</label>
-      <input v-model="quiz.category" type="text" required />
+      <select v-model="quiz.category" required>
+        <option value="">-- カテゴリを選択 --</option>
+        <option value="おこづかい">おこづかい</option>
+        <option value="買い物">買い物</option>
+        <option value="貯金">貯金</option>
+      </select>
 
-      <button type="submit">登録する</button>
+      <div class="submit-wrapper">
+        <button type="submit">登録する</button>
+      </div>
     </form>
   </div>
 </template>
@@ -89,10 +96,20 @@ label {
 }
 
 input,
+select,
 textarea {
   width: 100%;
   padding: 0.5rem;
   font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.submit-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
 }
 
 button {
