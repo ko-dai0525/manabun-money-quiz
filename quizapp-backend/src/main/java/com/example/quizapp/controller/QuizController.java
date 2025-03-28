@@ -2,6 +2,9 @@ package com.example.quizapp.controller;
 
 import com.example.quizapp.entity.Quiz;
 import com.example.quizapp.repository.QuizRepository;
+import com.example.quizapp.dto.QuizRequestDto;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,13 +26,6 @@ public class QuizController {
     //     return quizRepository.findAll();
     // }
 
-    // 新しい質問を追加
-    @PostMapping
-    public ResponseEntity<Quiz> createQuiz(@RequestBody Quiz quiz) {
-        Quiz savedQuiz = quizRepository.save(quiz);
-        return ResponseEntity.ok(savedQuiz);
-    }
-
     // 絞り込み用のAPIを追加
     @GetMapping
     public List<Quiz> getQuizzes(@RequestParam(required = false) String category) {
@@ -39,4 +35,22 @@ public class QuizController {
             return quizRepository.findAll();
         }
     }
+
+    // クイズを投稿するAPIを追加
+    @PostMapping
+    public ResponseEntity<Quiz> createQuiz(@Valid @RequestBody QuizRequestDto quizDto) {
+        Quiz quiz = new Quiz();
+        quiz.setQuestionText(quizDto.getQuestionText());
+        quiz.setOption1(quizDto.getOption1());
+        quiz.setOption2(quizDto.getOption2());
+        quiz.setOption3(quizDto.getOption3());
+        quiz.setOption4(quizDto.getOption4());
+        quiz.setAnswer(quizDto.getAnswer());
+        quiz.setExplanation(quizDto.getExplanation());
+        quiz.setCategory(quizDto.getCategory());
+
+        Quiz savedQuiz = quizRepository.save(quiz);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedQuiz);
+    }
+
 }
