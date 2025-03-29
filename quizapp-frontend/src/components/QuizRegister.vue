@@ -1,6 +1,9 @@
 <template>
   <div class="register-container">
     <h2>クイズ登録フォーム</h2>
+    <div class="home-back-button">
+      <RouterLink to="/">🏠 ホームに戻る</RouterLink>
+    </div>
     <form @submit.prevent="submitQuiz">
       <label>問題文</label>
       <textarea v-model="quiz.questionText" required></textarea>
@@ -124,5 +127,12 @@ button {
 
 button:hover {
   background-color: #45a049;
+}
+
+.home-back-button {
+  text-align: right;
+  margin-bottom: 1rem;
+  text-decoration: none;
+  font-size: 1rem;
 }
 </style>

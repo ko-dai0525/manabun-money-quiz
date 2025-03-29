@@ -3,6 +3,7 @@ import QuizPlayer from "../components/QuizPlayer.vue";
 import ResultView from "../components/ResultView.vue";
 import Home from "../components/Home.vue";
 import QuizRegister from "../components/QuizRegister.vue";
+import QuizList from "../components/QuizManage.vue";
 
 const routes = [
   {
@@ -24,7 +25,12 @@ const routes = [
     path: "/register",
     name: "QuizRegister",
     component: QuizRegister,
-  }
+  },
+  {
+    path: "/manage",
+    name: "QuizManage",
+    component: QuizList,
+  },
 ];
 
 const router = createRouter({
