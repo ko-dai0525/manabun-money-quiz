@@ -9,6 +9,7 @@ export interface Quiz {
   option4: string;
   answer: number;
   explanation: string;
+  category: string;
 }
 
 // バックエンドの API エンドポイント（必要に応じて調整）

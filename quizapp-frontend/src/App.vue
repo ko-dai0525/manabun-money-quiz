@@ -1,21 +1,21 @@
 <template>
   <div>
     <router-view />
-    <img src="/src/assets/mascot.png" alt="マスコット" class="mascot-right" />
+    <!-- マスコット：/manage以外で表示-->
+    <img
+      v-if="route.path !== '/manage'"
+      src="/src/assets/mascot.png"
+      alt="マスコット"
+      class="mascot-right"
+    />
     <img src="/src/assets/mascot-bg.png" class="background-image" />
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import QuizPlayer from "./components/QuizPlayer.vue";
+<script lang="ts" setup>
+import { useRoute } from "vue-router";
 
-export default defineComponent({
-  name: "App",
-  components: {
-    QuizPlayer,
-  },
-});
+const route = useRoute();
 </script>
 
 <style>
