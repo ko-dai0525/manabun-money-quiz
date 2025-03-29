@@ -36,6 +36,15 @@ public class QuizController {
         }
     }
 
+    // クイズの詳細を取得するAPIを追加
+    @GetMapping("/{id}")
+    public ResponseEntity<Quiz> getQuizById(@PathVariable Long id) {
+        System.out.println("ID: " + id);
+        return quizRepository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     // クイズを投稿するAPIを追加
     @PostMapping
     public ResponseEntity<Quiz> createQuiz(@Valid @RequestBody QuizRequestDto quizDto) {
@@ -53,4 +62,13 @@ public class QuizController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedQuiz);
     }
 
+    // クイズを削除するAPIを追加
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteQuiz(@PathVariable Long id) {
+        if (!quizRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        quizRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
 }
