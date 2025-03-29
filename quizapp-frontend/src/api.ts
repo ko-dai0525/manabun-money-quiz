@@ -41,3 +41,10 @@ export const createQuiz = async (quiz: Omit<Quiz, "id">): Promise<Quiz> => {
   const response = await axios.post<Quiz>(API_URL, quiz);
   return response.data;
 };
+
+/**
+ * クイズを削除する
+ */
+export const deleteQuiz = async (id: number): Promise<void> => {
+  await axios.delete(`${API_URL}/${id}`);
+};
