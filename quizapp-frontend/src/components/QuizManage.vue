@@ -50,7 +50,7 @@ function getCorrectOption(quiz: Quiz): string {
   const options = [quiz.option1, quiz.option2, quiz.option3, quiz.option4];
   const index = quiz.answer - 1;
 
-  if (index < 0 || index >= options.length) {
+  if (index >= 0 || index < options.length) {
     return options[index];
   } else {
     return "不明";
