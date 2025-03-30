@@ -1,9 +1,10 @@
 <template>
   <div class="quiz-list">
     <h2>登録済みのクイズ一覧</h2>
-    <div class="action-button">
+    <div class="action-button" v-if="isAdmin">
       <RouterLink to="/">🏠 ホームに戻る</RouterLink>
       <button @click="deleteSelectedQuizzes">🗑 選択したクイズを削除</button>
+      <LogoutButton />
     </div>
 
     <div class="table-wrapper">
@@ -43,6 +44,7 @@
 import { onMounted, ref } from "vue";
 import { fetchQuizzes, type Quiz } from "../api";
 import { deleteQuiz } from "../api";
+import LogoutButton from "./LogoutButton.vue";
 
 const quizzes = ref<Quiz[]>([]);
 const selectedIds = ref<number[]>([]);
@@ -80,8 +82,17 @@ const deleteSelectedQuizzes = async () => {
   }
 };
 
+const isAdmin = ref(false);
+
 onMounted(async () => {
   quizzes.value = await fetchQuizzes();
+
+  const storedPin = localStorage.getItem("adminPin");
+  if (storedPin === "1234") {
+    isAdmin.value = true;
+  } else {
+    alert("管理者PINコードが必要です。");
+  }
 });
 
 /**

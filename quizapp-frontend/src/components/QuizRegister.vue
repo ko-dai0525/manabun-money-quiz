@@ -3,6 +3,7 @@
     <h2>クイズ登録フォーム</h2>
     <div class="home-back-button">
       <RouterLink to="/">🏠 ホームに戻る</RouterLink>
+      <LogoutButton />
     </div>
     <form @submit.prevent="submitQuiz">
       <label>問題文</label>
@@ -50,6 +51,8 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import { createQuiz } from "../api";
+import { RouterLink } from "vue-router";
+import LogoutButton from "./LogoutButton.vue";
 
 const quiz = ref({
   questionText: "",
