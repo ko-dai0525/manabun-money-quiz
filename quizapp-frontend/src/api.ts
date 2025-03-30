@@ -1,5 +1,14 @@
 import axios from "axios";
 
+// 保存してあるPINを取得
+const storedPin = sessionStorage.getItem("adminPin");
+if (storedPin) {
+  axios.defaults.headers.common["Authorization"] = `Bearer ${storedPin}`;
+}
+
+// APIベースのURL
+const API_URL = "http://localhost:8080/api/quizzes";
+
 export interface Quiz {
   id: number;
   questionText: string;
@@ -11,9 +20,6 @@ export interface Quiz {
   explanation: string;
   category: string;
 }
-
-// バックエンドの API エンドポイント（必要に応じて調整）
-const API_URL = "http://localhost:8080/api/quizzes";
 
 /**
  * クイズの一覧を取得する

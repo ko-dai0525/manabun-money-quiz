@@ -1,9 +1,15 @@
-import { createRouter, createWebHistory } from "vue-router";
+import {
+  createRouter,
+  createWebHistory,
+  type NavigationGuardNext,
+  type RouteLocationNormalized,
+} from "vue-router";
 import QuizPlayer from "../components/QuizPlayer.vue";
 import ResultView from "../components/ResultView.vue";
 import Home from "../components/Home.vue";
 import QuizRegister from "../components/QuizRegister.vue";
-import QuizList from "../components/QuizManage.vue";
+import AdminLogin from "../components/AdminLogin.vue";
+import QuizManage from "../components/QuizManage.vue";
 
 const routes = [
   {
@@ -25,11 +31,46 @@ const routes = [
     path: "/register",
     name: "QuizRegister",
     component: QuizRegister,
+    beforeEnter: (
+      _to: RouteLocationNormalized,
+      _from: RouteLocationNormalized,
+      next: NavigationGuardNext
+    ) => {
+      const storedPin = sessionStorage.getItem("adminPin");
+      if (storedPin === "1234") {
+        next();
+      } else {
+        next({
+          path: "/admin",
+          query: { redirect: _to.fullPath },
+        });
+      }
+    },
+  },
+  {
+    path: "/admin",
+    name: "AdminLogin",
+    component: AdminLogin,
   },
   {
     path: "/manage",
     name: "QuizManage",
-    component: QuizList,
+    component: QuizManage,
+    beforeEnter: (
+      _to: RouteLocationNormalized,
+      _from: RouteLocationNormalized,
+      next: NavigationGuardNext
+    ) => {
+      const storedPin = sessionStorage.getItem("adminPin");
+      if (storedPin === "1234") {
+        next();
+      } else {
+        next({
+          path: "/admin",
+          query: { redirect: _to.fullPath },
+        });
+      }
+    },
   },
 ];
 
