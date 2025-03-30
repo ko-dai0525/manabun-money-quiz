@@ -31,8 +31,8 @@ const submitPin = () => {
     return;
   }
 
-  // 仮の正解PIN（バックエンドと同期が必要）
-  const correctPin = "1234";
+  // PIN取得
+  const correctPin = import.meta.env.VITE_ADMIN_PIN;
 
   if (pin.value === correctPin) {
     sessionStorage.setItem("adminPin", pin.value);
