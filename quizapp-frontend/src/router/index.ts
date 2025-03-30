@@ -36,8 +36,9 @@ const routes = [
       _from: RouteLocationNormalized,
       next: NavigationGuardNext
     ) => {
+      const correctPin = import.meta.env.VITE_ADMIN_PIN;
       const storedPin = sessionStorage.getItem("adminPin");
-      if (storedPin === "1234") {
+      if (storedPin === correctPin) {
         next();
       } else {
         next({
@@ -61,8 +62,9 @@ const routes = [
       _from: RouteLocationNormalized,
       next: NavigationGuardNext
     ) => {
+      const correctPin = import.meta.env.VITE_ADMIN_PIN;
       const storedPin = sessionStorage.getItem("adminPin");
-      if (storedPin === "1234") {
+      if (storedPin === correctPin) {
         next();
       } else {
         next({

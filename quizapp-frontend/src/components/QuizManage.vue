@@ -83,12 +83,12 @@ const deleteSelectedQuizzes = async () => {
 };
 
 const isAdmin = ref(false);
-
+const correctPin = import.meta.env.VITE_ADMIN_PIN;
 onMounted(async () => {
   quizzes.value = await fetchQuizzes();
 
   const storedPin = sessionStorage.getItem("adminPin");
-  if (storedPin === "1234") {
+  if (storedPin === correctPin) {
     isAdmin.value = true;
   } else {
     alert("管理者PINコードが必要です。");
