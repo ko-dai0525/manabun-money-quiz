@@ -35,7 +35,7 @@ const submitPin = () => {
   const correctPin = "1234";
 
   if (pin.value === correctPin) {
-    localStorage.setItem("adminPin", pin.value);
+    sessionStorage.setItem("adminPin", pin.value);
     axios.defaults.headers.common["Authorization"] = `Bearer ${pin.value}`;
 
     // 遷移元の画面が query に入っている場合はそこに戻す

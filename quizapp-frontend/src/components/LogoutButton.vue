@@ -9,9 +9,9 @@ import axios from "axios";
 const router = useRouter();
 
 const logout = () => {
-  localStorage.removeItem("adminPin");
+  sessionStorage.removeItem("adminPin");
   delete axios.defaults.headers.common["Authorization"];
-  router.push("/"); // または "/" に戻してもOK
+  router.push("/");
 };
 </script>
 

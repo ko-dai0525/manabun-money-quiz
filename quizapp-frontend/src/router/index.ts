@@ -36,7 +36,7 @@ const routes = [
       _from: RouteLocationNormalized,
       next: NavigationGuardNext
     ) => {
-      const storedPin = localStorage.getItem("adminPin");
+      const storedPin = sessionStorage.getItem("adminPin");
       if (storedPin === "1234") {
         next();
       } else {
@@ -61,7 +61,7 @@ const routes = [
       _from: RouteLocationNormalized,
       next: NavigationGuardNext
     ) => {
-      const storedPin = localStorage.getItem("adminPin");
+      const storedPin = sessionStorage.getItem("adminPin");
       if (storedPin === "1234") {
         next();
       } else {

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // 保存してあるPINを取得
-const storedPin = localStorage.getItem("adminPin");
+const storedPin = sessionStorage.getItem("adminPin");
 if (storedPin) {
   axios.defaults.headers.common["Authorization"] = `Bearer ${storedPin}`;
 }
